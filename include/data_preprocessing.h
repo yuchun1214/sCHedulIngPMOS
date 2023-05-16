@@ -4,15 +4,16 @@
 #include <vector>
 #include "include/lot_base.h"
 
-class data_preprocessing_t{
+class data_preprocessing_t
+{
 public:
-    virtual std::vector<lot_base_t *>  createLots() = 0;
+    virtual std::vector<lot_base_t *> createLots() = 0;
 };
 
-class data_preprocessing_from_sources_t{
+class data_preprocessing_from_sources_t
+{
 public:
-
-    virtual std::vector<lot_base_t *>  createLots();
+    virtual std::vector<lot_base_t *> createLots();
 };
 
 

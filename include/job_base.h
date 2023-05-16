@@ -3,8 +3,8 @@
 
 #include <exception>
 #include <string>
-#include <vector>
 #include <utility>
+#include <vector>
 #include "include/forward_declaration.h"
 #include "include/list.h"
 
@@ -21,7 +21,8 @@ protected:
 
     machine_base_t *_machine;
 
-    std::vector<std::pair<machine_base_t *, double> > _available_machines_and_proessing_time;
+    std::vector<std::pair<machine_base_t *, double> >
+        _available_machines_and_proessing_time;
 
 public:
     job_base_t();
@@ -35,9 +36,11 @@ public:
         _machine = machine;
     }
 
-    virtual inline void addAvailableMachine(machine_base_t *machine, double process_time)
+    virtual inline void addAvailableMachine(machine_base_t *machine,
+                                            double process_time)
     {
-        _available_machines_and_proessing_time.push_back(std::pair<machine_base_t *, double>(machine, process_time));
+        _available_machines_and_proessing_time.push_back(
+            std::pair<machine_base_t *, double>(machine, process_time));
         _partition = 1.0 / _available_machines_and_proessing_time.size();
     }
 
@@ -45,8 +48,9 @@ public:
 
     virtual inline void setOsGene(double const *os_gene) { _os_gene = os_gene; }
 
-    virtual inline void setStartTime(double start_time) { 
-        _start_time = start_time; 
+    virtual inline void setStartTime(double start_time)
+    {
+        _start_time = start_time;
         _end_time = _start_time + _processing_time;
     }
 

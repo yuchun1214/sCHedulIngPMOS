@@ -27,7 +27,8 @@ machine_base_t *job_base_t::machineSelection()
     }
 
     int index = ms_gene_val / _partition;
-    std::pair<machine_base_t *, double> _machine_and_processing_time = _available_machines_and_proessing_time[index];
+    std::pair<machine_base_t *, double> _machine_and_processing_time =
+        _available_machines_and_proessing_time[index];
     _machine = _machine_and_processing_time.first;
     _processing_time = _machine_and_processing_time.second;
 

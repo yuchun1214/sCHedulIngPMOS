@@ -1,7 +1,6 @@
 #include "include/genetic_algorithm.h"
 
-genetic_algorithm_t::genetic_algorithm_t(
-                                         int gene_size,
+genetic_algorithm_t::genetic_algorithm_t(int gene_size,
                                          int population_size,
                                          double initial_selection_rate,
                                          double mutation_rate,
@@ -26,6 +25,5 @@ void genetic_algorithm_t::geneticAlgorithm(int iterations)
 {
     initializePopulation();
     for (int i = 0; i < iterations; i++) {
-        
     }
 }

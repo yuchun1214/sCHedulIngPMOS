@@ -10,15 +10,14 @@
 class genetic_algorithm_t
 {
 protected:
-    /// @brief 
+    /// @brief
     int _population_size, _gene_size;
     double _initial_selection_rate, _mutation_rate, _crossover_rate;
 
     std::vector<chromosome_t *> _populations;
 
 public:
-    genetic_algorithm_t(
-                        int gene_size,
+    genetic_algorithm_t(int gene_size,
                         int population_size,
                         double initial_selection_rate,
                         double mutation_rate,

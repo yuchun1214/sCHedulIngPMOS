@@ -35,7 +35,8 @@ void machine_base_t::sortJob()
     head = (job_base_t *) list_merge_sort(head);
 }
 
-double machine_base_t::scheduling(){
+double machine_base_t::scheduling()
+{
     sortJob();
 
     list_node_t<double> *iter = head, *prev = nullptr;
@@ -45,6 +46,6 @@ double machine_base_t::scheduling(){
     // while(iter != nullptr){
     //     job = (job_base_t *)iter;
     //     job->setStartTime(time_line);
-    //     
+    //
     // }
 }
