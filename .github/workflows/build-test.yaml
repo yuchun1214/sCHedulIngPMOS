@@ -1,0 +1,25 @@
+name: build-test
+on: [ push, pull_request ]
+jobs:
+    build_test:
+        strategy:
+            matrix:
+                os : ["ubuntu-latest", "macos-latest", "windows-latest"]
+            fail-fast : false
+        runs-on: ${{ matrix.os }}
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build Test On Windows
+              run: |
+                cmake -S . -B build
+                cmake --build build --parallel
+              shell: powershell
+              if: runner.os == 'Windows'
+            - name: Build Test Standalone
+              run: |
+                cmake -S . -B build
+                cmake --build build --parallel
+              if: runner.os != 'Windows'
+            - name: Test
+              run: |
+                cmake --build build --target test
