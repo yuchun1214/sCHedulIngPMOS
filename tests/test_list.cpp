@@ -66,6 +66,8 @@ TEST_P(test_list_int_t, test_sorted)
         EXPECT_EQ(iter->getData(), d);
         iter = iter->getNext();
     }
+    // std::vector<int> v = { 3, 1, 4, 1, 5 };
+    // std::cout << v[5] << std::endl;
 }
 
 INSTANTIATE_TEST_SUITE_P(

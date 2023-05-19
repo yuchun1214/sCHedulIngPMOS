@@ -39,13 +39,14 @@ double machine_base_t::scheduling()
 {
     sortJob();
 
-    list_node_t<double> *iter = head, *prev = nullptr;
-    job_base_t *job;
-    double time_line = available_time + machineInitialSetupTime();
+    // list_node_t<double> *iter = head, *prev = nullptr;
+    // job_base_t *job;
+    // double time_line = available_time + machineInitialSetupTime();
 
     // while(iter != nullptr){
     //     job = (job_base_t *)iter;
     //     job->setStartTime(time_line);
     //
     // }
+    return 0;
 }

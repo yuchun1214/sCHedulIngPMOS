@@ -15,7 +15,7 @@
 using namespace std;
 
 time_converter_base_t::time_converter_base_t(std::string _pattern)
-    : pattern(_pattern), pattern_str(_pattern)
+    : pattern_str(_pattern), pattern(_pattern)
 {
 }
 
