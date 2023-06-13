@@ -22,4 +22,5 @@ jobs:
               if: runner.os != 'Windows'
             - name: Test
               run: |
-                cmake --build build --target test
+                # cmake --build build --target test
+                ./build/tests/Tests
