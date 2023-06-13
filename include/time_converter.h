@@ -26,7 +26,9 @@ protected:
 public:
     virtual bool isThisType(std::string text);
     virtual time_t operator()(std::string text) = 0;
+    virtual ~time_converter_base_t() {}
 };
+
 
 /**
  * @brief Regular Expression with format : "YY-MM-DD HH:MM"
@@ -88,6 +90,20 @@ public:
     virtual time_t operator()(std::string text);
 };
 
+class time_converters_t
+{
+public:
+    std::vector<time_converter_base_t *> time_converters;
+
+    ~time_converters_t()
+    {
+        for (auto *converter : time_converters) {
+            delete converter;
+        }
+        time_converters.clear();
+    }
+};
+
 
 /**
  * @brief timeConverter that converts date/time to time_t format, in
@@ -103,7 +119,7 @@ class timeConverter
     FRIEND_TEST(test_string_to_time_t, test_set_base_time);
 #endif
 private:
-    static std::vector<time_converter_base_t *> converters;
+    static time_converters_t converters;
 
     time_t _base_time;
 

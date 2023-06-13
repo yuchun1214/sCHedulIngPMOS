@@ -157,6 +157,7 @@ TEST_F(test_csv_read_t, test_csv_read_file_header)
             EXPECT_NO_THROW(csv->_head.at(it->first));
             EXPECT_EQ(csv->_head.at(it->first), it->second);
         }
+        delete csv;
     }
     remove(filename);
 }

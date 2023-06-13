@@ -50,7 +50,7 @@ TEST_P(test_csv_has_bom_t, test_has_bom)
     char *text = strdup(test_text.c_str());
     bool retval = csv._hasBOM(text, cs.bom, (short) __builtin_clz(cs.bom));
     EXPECT_EQ(retval, cs.ans);
-    // free(text);
+    free(text);
 
     // for (unsigned int i = 0; i < data.size(); ++i) {
     //     string test_text = data[i].text;

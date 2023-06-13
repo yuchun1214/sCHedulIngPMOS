@@ -129,4 +129,4 @@ INSTANTIATE_TEST_SUITE_P(
                     test_data_t(std::vector<int>{1, 2, 3}, 0.1, 1),
                     test_data_t(vector<int>{1, 2, 3, 4, 5}, 0.5, 3),
                     test_data_t(vector<int>{1, 2, 3, 4}, 0.25, 2)));
-};  // namespace test_job_base_machine_selection
+}  // namespace test_job_base_machine_selection

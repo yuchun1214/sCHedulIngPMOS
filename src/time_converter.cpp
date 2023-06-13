@@ -148,20 +148,20 @@ time_t time_converter_only_date_with_dash_t::operator()(string text)
 }
 
 
-vector<time_converter_base_t *> timeConverter::converters = {
-    new time_converter_with_dash_without_second_t(),
-    new time_converter_with_dash_with_second_t(),
-    new time_converter_with_slash_with_second_t(),
-    new time_converter_with_slash_without_second_t(),
-    new time_converter_only_date_with_slash_t(),
-    new time_converter_only_date_with_dash_t()};
+time_converters_t timeConverter::converters = {
+    {new time_converter_with_dash_without_second_t(),
+     new time_converter_with_dash_with_second_t(),
+     new time_converter_with_slash_with_second_t(),
+     new time_converter_with_slash_without_second_t(),
+     new time_converter_only_date_with_slash_t(),
+     new time_converter_only_date_with_dash_t()}};
 
 time_t timeConverter::operator()(std::string text)
 {
     time_t time = 0;
-    for (unsigned int i = 0; i < converters.size(); ++i) {
-        if (converters[i]->isThisType(text))
-            time = converters[i]->operator()(text);
+    for (unsigned int i = 0; i < converters.time_converters.size(); ++i) {
+        if (converters.time_converters[i]->isThisType(text))
+            time = converters.time_converters[i]->operator()(text);
     }
     return time - _base_time;
 }

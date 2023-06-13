@@ -35,14 +35,19 @@ class test_list_int_t : public testing::TestWithParam<list_test_data_t<int>>
 TEST_P(test_list_int_t, test_sorted)
 {
     auto cs = GetParam();
+    vector<list_node_t<int> *> allocated_nodes;
     list_node_t<int> *head, *iter;
     head = iter = nullptr;
     for (auto &d : cs.data) {
         if (head == nullptr) {
             iter = head = new list_node_t<int>(d);
+
+            allocated_nodes.push_back(head);
         } else {
             iter->setNext(new list_node_t<int>(d));
             iter = iter->getNext();
+
+            allocated_nodes.push_back(iter);
         }
     }
 
@@ -68,6 +73,10 @@ TEST_P(test_list_int_t, test_sorted)
     }
     // std::vector<int> v = { 3, 1, 4, 1, 5 };
     // std::cout << v[5] << std::endl;
+    //
+    for (auto *node : allocated_nodes) {
+        delete node;
+    }
 }
 
 INSTANTIATE_TEST_SUITE_P(
@@ -96,4 +105,4 @@ INSTANTIATE_TEST_SUITE_P(
 //         list_test_data_t<double>{vector<double>{1.0, 1.0, 1.0, 1.0, 1.0, 1.0}}
 //     )
 // );
-};  // namespace list
+}  // namespace list
