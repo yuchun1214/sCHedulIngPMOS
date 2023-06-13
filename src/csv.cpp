@@ -300,7 +300,7 @@ void csv_t::setHeader(std::string old, std::string neun, bool replace)
     }
 }
 
-void csv_t::setHeaders(std::map<std::string, std::uint16_t> head)
+void csv_t::setHeaders(std::map<std::string, size_t> head)
 {
     _head = head;
 }
@@ -325,7 +325,7 @@ void csv_t::addData(std::map<std::string, std::string> elements)
 {
     std::vector<std::string> data;
     data.reserve(elements.size());
-    std::map<std::string, std::uint16_t> head;
+    std::map<std::string, size_t> head;
 
     // if _head is empty, set the header
     int idx = 0;
@@ -371,7 +371,7 @@ bool csv_t::write(std::string filename, std::string mode, bool head)
     std::vector<std::string> strings_temp;
     std::string row;
     if (head) {
-        for (std::map<std::string, std::uint16_t>::iterator it = _head.begin();
+        for (std::map<std::string, size_t>::iterator it = _head.begin();
              it != _head.end(); it++) {
             strings_temp.push_back(it->first);
         }
@@ -383,7 +383,7 @@ bool csv_t::write(std::string filename, std::string mode, bool head)
     }
     for (size_t i = 0; i < _data.size(); ++i) {
         strings_temp.clear();
-        for (std::map<std::string, std::uint16_t>::iterator it = _head.begin();
+        for (std::map<std::string, size_t>::iterator it = _head.begin();
              it != _head.end(); ++it) {
             strings_temp.push_back(formCsvElement(_data[i][it->second]));
         }
@@ -423,7 +423,7 @@ std::map<std::string, std::string> csv_t::getElements(int row)
 {
     std::map<std::string, std::string> data;
 
-    for (std::map<std::string, std::uint16_t>::iterator it = _head.begin();
+    for (std::map<std::string, size_t>::iterator it = _head.begin();
          it != _head.end(); ++it) {
         data[it->first] = _data[row][it->second];
     }

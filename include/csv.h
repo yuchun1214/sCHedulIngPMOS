@@ -203,7 +203,7 @@ public:
      *
      * @param head : new header
      */
-    void setHeaders(std::map<std::string, uint16_t> head);
+    void setHeaders(std::map<std::string, size_t> head);
 
     /**
      * setHeader() - set single header
