@@ -294,7 +294,7 @@ public:
      *
      * @return number of rows
      */
-    unsigned int nrows();
+    size_t nrows();
 
 
     /**

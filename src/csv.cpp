@@ -328,7 +328,7 @@ void csv_t::addData(std::map<std::string, std::string> elements)
     std::map<std::string, size_t> head;
 
     // if _head is empty, set the header
-    int idx = 0;
+    size_t idx = 0;
     if (_head.empty()) {
         for (std::map<std::string, std::string>::iterator it = elements.begin();
              it != elements.end(); ++it) {
@@ -410,7 +410,7 @@ std::vector<std::string> csv_t::getRow(int row)
 
 std::string csv_t::getElement(std::string _col, int row)
 {
-    uint16_t col = _head[_col];
+    size_t col = _head[_col];
     return getRow(row).at(col);
 }
 
@@ -431,7 +431,7 @@ std::map<std::string, std::string> csv_t::getElements(int row)
     return data;
 }
 
-unsigned int csv_t::nrows()
+size_t csv_t::nrows()
 {
     return _data.size();
 }
@@ -459,7 +459,7 @@ csv_t csv_t::filter(std::string head, std::string value)
     csv_t newcsv;
 
     std::vector<std::vector<std::string> > data;
-    int idx = _head[head];
+    size_t idx = _head[head];
     for (size_t i = 0; i < _data.size(); ++i) {
         if (_data[i][idx].compare(value) == 0) {
             data.push_back(_data[i]);
@@ -479,7 +479,7 @@ csv_t csv_t::filter(std::string head, std::string value, std::string value2)
     csv_t newcsv;
 
     std::vector<std::vector<std::string> > data;
-    int idx = _head[head];
+    size_t idx = _head[head];
     for (size_t i = 0; i < _data.size(); ++i) {
         if (_data[i][idx].compare(value) == 0 ||
             _data[i][idx].compare(value2) == 0) {
@@ -497,7 +497,7 @@ csv_t csv_t::filter(std::string head, std::string value, std::string value2)
 
 std::vector<std::string> csv_t::getColumn(std::string head)
 {
-    int idx = _head[head];
+    size_t idx = _head[head];
     std::vector<std::string> cols;
 
     for (size_t i = 0; i < _data.size(); ++i) {
