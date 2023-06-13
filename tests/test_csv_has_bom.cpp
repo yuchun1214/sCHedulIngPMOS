@@ -6,7 +6,23 @@
 #define UNIT_TEST
 #include "include/csv.h"
 
+#ifdef _MSC_VER
+#include <intrin.h>
+#endif
+
 using namespace std;
+
+unsigned int countLeadingZeros(unsigned int value)
+{
+#ifdef _MSC_VER
+    unsigned long leadingZero = 0;
+    _BitScanReverse(&leadingZero, value);
+    return 31 - leadingZero;
+#else
+    return __builtin_clz(value);
+#endif
+}
+
 
 typedef struct bom_data_t {
     unsigned int bom;
@@ -33,7 +49,7 @@ public:
         _bom.bom = 0;
         _bom.bom = bom;
         text.insert(0, _bom.text,
-                    (sizeof(unsigned int) - __builtin_clz(_bom.bom)) >> 2);
+                    (sizeof(unsigned int) - countLeadingZeros(_bom.bom)) >> 2);
         return text;
     }
 };
@@ -48,7 +64,7 @@ TEST_P(test_csv_has_bom_t, test_has_bom)
 
     // test_text = insertBom(test_text, cs.bom);
     char *text = strdup(test_text.c_str());
-    bool retval = csv._hasBOM(text, cs.bom, (short) __builtin_clz(cs.bom));
+    bool retval = csv._hasBOM(text, cs.bom, (short) countLeadingZeros(cs.bom));
     EXPECT_EQ(retval, cs.ans);
     free(text);
 

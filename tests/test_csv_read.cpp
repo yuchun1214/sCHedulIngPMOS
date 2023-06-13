@@ -30,8 +30,8 @@ bool test_csv_read_t::twoVectorsAreTheSame(vector<string> t1, vector<string> t2)
     if (t1.size() != t2.size())
         return false;
 
-    int size = t1.size();
-    for (int i = 0; i < size; ++i) {
+    size_t size = t1.size();
+    for (size_t i = 0; i < size; ++i) {
         if (t1[i].compare(t2[i]) != 0) {
             return false;
         }
@@ -154,7 +154,8 @@ TEST_F(test_csv_read_t, test_csv_read_file_header)
         csv_t *csv = new csv_t(filename, "r");
         EXPECT_NO_THROW(csv->read());
         for (auto it = ans.begin(); it != ans.end(); ++it) {
-            EXPECT_NO_THROW(csv->_head.at(it->first));
+            EXPECT_NO_THROW(static_cast<void>(csv->_head.at(
+                it->first)));  // I am sure I am discarding the return value
             EXPECT_EQ(csv->_head.at(it->first), it->second);
         }
         delete csv;
