@@ -62,8 +62,12 @@ TEST_P(test_csv_has_bom_t, test_has_bom)
     // UTF-8
     string test_text = cs.text;
 
-    // test_text = insertBom(test_text, cs.bom);
+// test_text = insertBom(test_text, cs.bom);
+#ifdef _MSC_VER
+    char *text = _strdup(test_text.c_str());
+#else
     char *text = strdup(test_text.c_str());
+#endif
     bool retval = csv._hasBOM(text, cs.bom, (short) countLeadingZeros(cs.bom));
     EXPECT_EQ(retval, cs.ans);
     free(text);

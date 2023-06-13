@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+#include <algorithm>
 #include <vector>
 #include "include/job_base.h"
 #include "include/list.h"
@@ -81,7 +82,7 @@ TEST_P(test_machine_add_sort_job_t, test_insert_job_to_the_head)
     list_node_t<double> *iter = machine->getHeadOfJob();
     list_node_t<double> *prev;
 
-    int i = cs.data.size();
+    size_t i = cs.data.size();
     while (iter != nullptr) {
         EXPECT_EQ(iter->getData(), cs.data[--i]);
         prev = iter;
