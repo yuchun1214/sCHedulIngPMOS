@@ -6,6 +6,10 @@
 #include <string>
 #include <vector>
 
+#ifdef UNIT_TEST
+#include <gtest/gtest_prod.h>
+#endif
+
 /**
  * @brief Abstract base class of some Regular Expression of date/time format
  */
@@ -92,6 +96,12 @@ public:
 
 class timeConverter
 {
+#ifdef UNIT_TEST
+    friend class test_string_to_time_t;
+    FRIEND_TEST(test_string_to_time_t, test_ctor_setup_base_time_by_str);
+    FRIEND_TEST(test_string_to_time_t, test_ctor_setup_base_time_by_value);
+    FRIEND_TEST(test_string_to_time_t, test_set_base_time);
+#endif
 private:
     static std::vector<time_converter_base_t *> converters;
 

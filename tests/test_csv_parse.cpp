@@ -1,15 +1,12 @@
 #include <gtest/gtest.h>
 
-#define private public
-#define protected public
 
 #include <string>
 #include <vector>
 
+#define UNIT_TEST
 #include "include/csv.h"
 
-#undef private
-#undef protected
 
 struct Text {
     std::vector<std::string> token;
@@ -53,7 +50,7 @@ TEST_P(ParseTest, csv_parse)
     text->token = csv.parseCsvRow(cpt, as.delimiter);
     EXPECT_EQ(as.output, text->token) << "Expected : as.output\n";
 
-    delete cpt;
+    free(cpt);
 }
 
 INSTANTIATE_TEST_SUITE_P(

@@ -2,9 +2,8 @@
 #include <iostream>
 #include <string>
 
-#define private public
+#define UNIT_TEST
 #include "include/time_converter.h"
-#undef private
 
 using namespace std;
 

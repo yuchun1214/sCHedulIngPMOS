@@ -41,9 +41,8 @@ csv_t::csv_t(std::string filename,
     _filename = filename;
     _mode = mode;
     _file = NULL;
-    bool retval;
     if (r) {
-        retval = read(filename, mode, head, r1, r2);
+        read(filename, mode, head, r1, r2);
     }
 }
 
@@ -73,6 +72,7 @@ std::vector<std::string> csv_t::parseCsvRow(char *text, char delimiter)
             case STATE_QuotationInString:
                 data.push_back(token);
                 token.clear();
+                break;
             case STATE_NextCharacter:
                 state = STATE_EndOfLine;
                 break;
@@ -190,7 +190,7 @@ bool csv_t::_hasBOM(char *_text, unsigned int bom, short bits)
     unsigned int result, *text;
     text = (unsigned int *) _text;
     result = *text ^ bom;
-    return !(result << bits);
+    return (result << bits) == 0;
 }
 
 // bool csv_t::read(bool head, int r1, int r2)

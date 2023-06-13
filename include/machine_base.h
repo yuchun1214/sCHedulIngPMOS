@@ -24,12 +24,14 @@ public:
 
     int getSizeOfJobs() { return size_of_jobs; }
 
-    virtual double setupTime(job_base_t *job1, job_base_t *job2) { return 0; }
+    // virtual double setupTime(job_base_t *job1, job_base_t *job2) { return 0;
+    // }
     virtual double machineInitialSetupTime() { return 0; }
 
     double scheduling();
     // double getQuality();
     // double getAvailableTime();
+    virtual ~machine_base_t() {}
 };
 
 #endif

@@ -1,14 +1,10 @@
 #include <gtest/gtest.h>
 #include "include/def.h"
 
-#define private public
-#define protected public
-
+#define UNIT_TEST
 #include "include/csv.h"
 
-#undef private
-#undef protected
-
+#include <cstring>
 #include <map>
 #include <string>
 #include <vector>
@@ -25,8 +21,9 @@ class test_csv_read_t : public testing::Test
 {
 public:
     bool twoVectorsAreTheSame(vector<string> t1, vector<string> t2);
-    string insertBom(string text, unsigned int bom);
+    // string insertBom(string text, unsigned int bom);
 };
+
 
 bool test_csv_read_t::twoVectorsAreTheSame(vector<string> t1, vector<string> t2)
 {
@@ -42,18 +39,7 @@ bool test_csv_read_t::twoVectorsAreTheSame(vector<string> t1, vector<string> t2)
     return true;
 }
 
-string test_csv_read_t::insertBom(string text, unsigned int bom)
-{
-    typedef union bom_union {
-        unsigned int bom;
-        char text[4];
-    } bom_union_t;
 
-    bom_union_t _bom;
-    _bom.bom = bom;
-    text = _bom.text + text;
-    return text;
-}
 
 TEST_F(test_csv_read_t, test_ctor_1)
 {
@@ -92,7 +78,7 @@ TEST_F(test_csv_read_t, test_set_filename)
 TEST_F(test_csv_read_t, test_parse_csv_row)
 {
     csv_t csv;
-    const char *test_data = "1,2,3,";
+    // const char *test_data = "1,2,3,";
     vector<string> ans = {"1", "2", "3", ""};
 
     typedef struct test_parse_data_t {
@@ -120,113 +106,6 @@ TEST_F(test_csv_read_t, test_parse_csv_row)
     }
 }
 
-TEST_F(test_csv_read_t, test_has_bom)
-{
-    typedef struct test_has_bom_data_t {
-        unsigned int bom;
-        string text;
-        bool insert_bom;
-        bool ans;
-    } test_has_bom_data_t;
-
-    vector<test_has_bom_data_t> data;
-    csv_t csv;
-
-    // UTF-8
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00BFBBEF, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00BFBBEF, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00BFBBEF, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // UTF-16
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x0000FFFE, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x0000FFFE, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x0000FFFE, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // UTF-7
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00762F2B, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00762F2B, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00762F2B, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // UTF-1
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x004C64F7, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x004C64F7, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x004C64F7, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // EDBIC
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x736673DD, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x736673DD, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x736673DD, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // SCSU
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00FFFE0E, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00FFFE0E, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x00FFFE0E, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // BOCU-1
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x0028EEFB, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x0028EEFB, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x0028EEFB, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // GB-18030
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x33953184, .text = "TEXT", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x33953184, .text = "", .insert_bom = true, .ans = true});
-
-    data.push_back(test_has_bom_data_t{
-        .bom = 0x33953184, .text = "TEXT", .insert_bom = false, .ans = false});
-
-    // TODO : Please write down some testing data below
-
-    for (unsigned int i = 0; i < data.size(); ++i) {
-        string test_text = data[i].text;
-        if (data[i].insert_bom) {
-            test_text = insertBom(test_text, data[i].bom);
-        }
-        char *text = strdup(test_text.c_str());
-        bool retval =
-            csv._hasBOM(text, data[i].bom, (short) __builtin_clz(data[i].bom));
-        EXPECT_EQ(retval, data[i].ans);
-        free(text);
-    }
-}
-
 TEST_F(test_csv_read_t, test_csv_read_exception_handling)
 {
     csv_t *csv;
@@ -243,35 +122,33 @@ TEST_F(test_csv_read_t, test_csv_read_file_header)
 {
     typedef struct test_csv_read_data_t {
         string header;
-        vector<string> content;
         map<string, int> ans;
     } test_csv_read_data_t;
 
     vector<test_csv_read_data_t> data;
-    data.push_back(test_csv_read_data_t{
-        .header = "h1,h2,h3", .ans = {{"h1", 0}, {"h2", 1}, {"h3", 2}}});
+    data.push_back(
+        test_csv_read_data_t{"h1,h2,h3", {{"h1", 0}, {"h2", 1}, {"h3", 2}}});
 
 
     data.push_back(test_csv_read_data_t{
-        .header = "h1,h2,h3,h4,h5",
-        .ans = {{"h1", 0}, {"h2", 1}, {"h3", 2}, {"h4", 3}, {"h5", 4}}});
+        "h1,h2,h3,h4,h5",
+        {{"h1", 0}, {"h2", 1}, {"h3", 2}, {"h4", 3}, {"h5", 4}}});
 
-    data.push_back(test_csv_read_data_t{.header = ""});
+    data.push_back(test_csv_read_data_t{"", map<string, int>()});
 
     const char *filename = "testing_file.csv";
     for (unsigned int i = 0; i < data.size(); ++i) {
         FILE *file = fopen(filename, "w");
         string header = data[i].header;
-        vector<string> content = data[i].content;
         map<string, int> ans = data[i].ans;
 
         if (header.length()) {
             fprintf(file, "%s\n", (char *) header.c_str());
         }
 
-        for (unsigned int j = 0; j < content.size(); ++j) {
-            fprintf(file, "%s\n", (char *) content[j].c_str());
-        }
+        // for (unsigned int j = 0; j < content.size(); ++j) {
+        //     fprintf(file, "%s\n", (char *) content[j].c_str());
+        // }
         fclose(file);
 
         csv_t *csv = new csv_t(filename, "r");

@@ -20,6 +20,10 @@
 
 #include "include/util.h"
 
+#ifdef UNIT_TEST
+#include <gtest/gtest_prod.h>
+#endif
+
 /**
  * @class csv_t
  * @brief csv_t type is used to read/write csv_t file.
@@ -30,11 +34,27 @@
  */
 class csv_t
 {
+#ifdef UNIT_TEST
+    friend struct ParseTest;
+    friend class test_csv_read_t;
+    friend class test_csv_has_bom_t;
+    FRIEND_TEST(ParseTest, csv_parse);
+    FRIEND_TEST(test_csv_read_t, test_ctor_1);
+    FRIEND_TEST(test_csv_read_t, test_ctor_with_2_params);
+    FRIEND_TEST(test_csv_read_t, test_set_mode);
+    FRIEND_TEST(test_csv_read_t, test_set_filename);
+    FRIEND_TEST(test_csv_read_t, test_parse_csv_row);
+    FRIEND_TEST(test_csv_read_t, test_has_bom);
+    FRIEND_TEST(test_csv_read_t, test_csv_read_exception_handling);
+    FRIEND_TEST(test_csv_read_t, test_csv_read_file_header);
+    FRIEND_TEST(test_csv_has_bom_t, test_has_bom);
+#endif
+
 protected:
     /**
-     * _hasBOM () - check if @b _text has UTF-@b bits kind of byte order mark.
+     * _hasBOM () - check if @b _text has UTF- @b bits kind of byte order mark.
      *
-     * In _hasBOM, the first 4 characters are cast to be unsigned int type
+     * In _hasBOM, the first 4 characters are casted to be unsigned int type
      * variable and check if the variable has BOM.
      *
      * @param _text : first line in the file.
