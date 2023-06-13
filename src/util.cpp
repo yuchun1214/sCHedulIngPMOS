@@ -46,8 +46,7 @@ std::string join(std::vector<std::string> strings, std::string delimiter)
     if (strings.size() == 0)
         return "";
     std::string s;
-    iter_range(strings, i, 0, strings.size() - 1)
-    {
+    for (size_t i = 0, end = strings.size() - 1; i < end; ++i) {
         s += strings[i];
         s += delimiter;
     }

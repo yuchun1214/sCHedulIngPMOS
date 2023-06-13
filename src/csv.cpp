@@ -147,7 +147,7 @@ std::vector<std::string> csv_t::parseCsvRow(char *text, char delimiter)
 std::string csv_t::formCsvElement(std::string text)
 {
     bool hasSpecialChar = false;
-    for (unsigned int i = 0, length = text.length(); i < length; ++i) {
+    for (size_t i = 0, length = text.length(); i < length; ++i) {
         if (text[i] == ',') {
             hasSpecialChar = true;
         } else if (text[i] == '"') {
@@ -166,8 +166,8 @@ std::string csv_t::formCsvElement(std::string text)
 void csv_t::trim(std::string text)
 {
     size_t found;
-    foreach (_data, i) {
-        foreach (_data[i], j) {
+    for (size_t i = 0; i < _data.size(); ++i) {
+        for (size_t j = 0; j < _data[i].size(); ++j) {
             found = _data[i][j].find_last_not_of(text);
             if (found != std::string::npos)
                 _data[i][j].erase(found + 1);
@@ -252,7 +252,7 @@ bool csv_t::read(std::string filename,
 
     text = parseCsvRow(line_ptr, ',');
     if (head) {
-        for (int i = 0, size = text.size(); i < size; ++i) {
+        for (size_t i = 0, size = text.size(); i < size; ++i) {
             if (text[i].compare("") != 0) {
                 _head[text[i]] = i;
             } else {
@@ -380,7 +380,7 @@ bool csv_t::write(std::string filename, std::string mode, bool head)
             return false;
         }
     }
-    foreach (_data, i) {
+    for (size_t i = 0; i < _data.size(); ++i) {
         strings_temp.clear();
         for (std::map<std::string, std::uint16_t>::iterator it = _head.begin();
              it != _head.end(); ++it) {
@@ -459,7 +459,7 @@ csv_t csv_t::filter(std::string head, std::string value)
 
     std::vector<std::vector<std::string> > data;
     int idx = _head[head];
-    foreach (_data, i) {
+    for (size_t i = 0; i < _data.size(); ++i) {
         if (_data[i][idx].compare(value) == 0) {
             data.push_back(_data[i]);
         }
@@ -479,7 +479,7 @@ csv_t csv_t::filter(std::string head, std::string value, std::string value2)
 
     std::vector<std::vector<std::string> > data;
     int idx = _head[head];
-    foreach (_data, i) {
+    for (size_t i = 0; i < _data.size(); ++i) {
         if (_data[i][idx].compare(value) == 0 ||
             _data[i][idx].compare(value2) == 0) {
             data.push_back(_data[i]);
@@ -499,7 +499,7 @@ std::vector<std::string> csv_t::getColumn(std::string head)
     int idx = _head[head];
     std::vector<std::string> cols;
 
-    foreach (_data, i) {
+    for (size_t i = 0; i < _data.size(); ++i) {
         cols.push_back(_data[i][idx]);
     }
 
@@ -510,7 +510,7 @@ void csv_t::dropNullRow()
 {
     std::vector<std::vector<std::string> > data = _data;
     _data.clear();
-    foreach (data, i) {
+    for (size_t i = 0; i < data.size(); ++i) {
         if (data[i].size() == 1) {
             if (data[i][0].length() != 0) {
                 _data.push_back(data[i]);

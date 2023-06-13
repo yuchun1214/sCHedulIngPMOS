@@ -16,6 +16,7 @@
 
 #if defined(WIN32) || defined(_WIN32)
 #define PATH_SEPARATOR "\\"
+#define _CRT_SECURE_NO_WARNINGS
 #else
 #define PATH_SEPARATOR "/"
 #endif

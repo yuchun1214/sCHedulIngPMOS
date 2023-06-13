@@ -27,7 +27,7 @@ machine_base_t *job_base_t::machineSelection()
         throw std::runtime_error("ms_gene value is out of range");
     }
 
-    int index = ms_gene_val / _partition;
+    int index = (int) (ms_gene_val / _partition);
     std::pair<machine_base_t *, double> _machine_and_processing_time =
         _available_machines_and_proessing_time[index];
     _machine = _machine_and_processing_time.first;
