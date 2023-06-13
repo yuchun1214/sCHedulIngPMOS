@@ -70,7 +70,7 @@ protected:
 
 protected:
     std::vector<std::vector<std::string> > _data;
-    std::map<std::string, std::uint16_t> _head;
+    std::map<std::string, size_t> _head;
     std::string _mode;
     std::string _filename;
     FILE *_file;

@@ -7,6 +7,7 @@
 #include <cstring>
 #include <locale>
 #include <stdexcept>
+#include "include/def.h"
 
 #define MAX_LEN 8192
 
@@ -441,7 +442,7 @@ std::vector<std::vector<std::string> > csv_t::getData(int r1, int r2)
     if ((r1 < 0 && r2 > 0) || (r1 > 0 && r2 < -1)) {
         throw std::invalid_argument("given r1 < 0 but r2 >0");
     } else if (r1 > 0 && r2 == -1) {
-        r2 = _data.size();
+        r2 = (int) _data.size();
     } else {
         return _data;
     }
