@@ -8,7 +8,7 @@ set(CMAKE_BUILD_TYPE Debug)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(MSVC)
     add_compile_options(
-        /Wall /WX 
+        /W3 /WX 
         /fsanitize=address 
         /fsanitize=fuzzer
     )
