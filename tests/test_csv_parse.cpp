@@ -45,7 +45,11 @@ TEST_P(ParseTest, csv_parse)
     csv_t csv;
     auto as = GetParam();
 
+#ifdef _MSC_VER
+    char *cpt = _strdup(as.input.c_str());
+#else
     char *cpt = strdup(as.input.c_str());
+#endif
 
     text->token = csv.parseCsvRow(cpt, as.delimiter);
     EXPECT_EQ(as.output, text->token) << "Expected : as.output\n";
