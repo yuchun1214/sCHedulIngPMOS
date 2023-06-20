@@ -20,7 +20,12 @@ jobs:
                 cmake -S . -B build
                 cmake --build build --parallel
               if: runner.os != 'Windows'
-            - name: Test
+            - name: Test on Windws
               run: |
                 # cmake --build build --target test
+                .\build\tests\Tests
+              if: runner.os == 'Windows'
+            - name: Test On Others
+              run: |
                 ./build/tests/Tests
+              if: runner.os != 'Windows'
