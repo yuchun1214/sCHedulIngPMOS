@@ -4,7 +4,7 @@ jobs:
     build_test:
         strategy:
             matrix:
-                os : ["ubuntu-latest", "macos-latest", "windows-2019"]
+                os : ["self-hosted", "ubuntu-latest", "macos-latest", "windows-latest"]
             fail-fast : false
         runs-on: ${{ matrix.os }}
         steps:
