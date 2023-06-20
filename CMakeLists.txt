@@ -9,15 +9,21 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 if(MSVC)
     add_compile_options(
         /W3 /WX 
-        /fsanitize=address 
-        /fsanitize=fuzzer
+        # /fsanitize=address 
+        # /fsanitize=fuzzer
     )
 else()
-    add_compile_options(
-        -Wall -Wextra -Wpedantic -Werror
-        -fsanitize=address
-    )
-    add_link_options(-fsanitize=address)
+    if (CMAKE_GENERATOR MATCHES "MinGW")
+        add_compile_options(
+            -Wall -Wextra -Wpedantic -Werror
+        )
+    else()
+        add_compile_options(
+            -Wall -Wextra -Wpedantic -Werror
+            -fsanitize=address
+        )
+        add_link_options(-fsanitize=address)
+    endif()
 endif()
 
 enable_testing()
