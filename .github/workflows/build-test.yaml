@@ -23,7 +23,7 @@ jobs:
             - name: Test on Windws
               run: |
                 # cmake --build build --target test
-                .\build\tests\Tests
+                .\build\tests\Tests.exe
               if: runner.os == 'Windows'
             - name: Test On Others
               run: |
