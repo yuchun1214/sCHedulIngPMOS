@@ -24,6 +24,7 @@ jobs:
               run: |
                 # cmake --build build --target test
                 .\build\tests\Tests.exe
+              shell: pwsh
               if: runner.os == 'Windows'
             - name: Test On Others
               run: |
